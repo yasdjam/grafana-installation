@@ -1,0 +1,42 @@
+# git clone .....
+
+
+1-helm repo add grafana https://grafana.github.io/helm-charts
+2-helm repo update
+3-helm install grafana stable/grafana
+
+4- helm list
+	: grafana and prometheus deployed
+
+
+5-kubectl get all
+  should see everything
+
+
+6- kubectl expose service grafana --type=NodePort --target-port=3000 --name=grafana-ext
+	answer is service/grafana-ext exposed
+
+7- kubectl get svs
+
+	grafana-ext is exposed
+
+8- access grafana
+	minikube service grafana-ext
+	 copy and paste to check in browser
+
+9- kubectl get secret --namespace default grafana -o yaml
+
+  you should be able see the admin password and user name encripted
+
+10- command to decript the user name :
+
+
+           Type the encripte info
+ 	echo "encripte_user=" | openssl base64 -d ; echo 
+
+ 	same for password same command
+
+ 11- or use the same command : kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+ 12-import dashboard code 6417
